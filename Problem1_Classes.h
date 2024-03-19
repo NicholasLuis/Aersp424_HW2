@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <mutex>
 
 // This program contains all of the necessary classes used in question 1
 
@@ -40,9 +41,13 @@ public:
 class AerospaceControlSystem {
 private:
 	std::vector<Sensor*> sensorList;
+	//std::mutex* mutex = new std::mutex;
 public:
 	void addSensor(Sensor* sensorPtr);
 	void monitorAndAdjust();
+
+	// AerospaceControlSystem(std::mutex *m); // Constructor that accepts a mutex
+	~AerospaceControlSystem(); // De-constructor
 };
 
 #endif

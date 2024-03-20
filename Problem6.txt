@@ -1,0 +1,2 @@
+Question 6:
+One issue that I noticed during the development of the program is that fact that it creates a queue for the list of aircraft coming into the traffic pattern. This is a First-In-First-Out container so it gives no priority if a plane needs to land in an emergency (for example).

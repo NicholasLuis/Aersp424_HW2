@@ -1,0 +1,10 @@
+QUESTION 5: What issues may happen if the robot that finished the
+task is assigned a new task immediately? And what will be a potential
+solution for the issues?
+
+	The 5 second delay accounts for the time it takes to do the task and put the tools back.
+	If the robot has a new task to do immediately, then it shouldn't waste time putting down the tools.
+	A potential solution is to separate the function into two
+	different ones: One that accounts for the time it takes to
+	complete the task and another that accounts for the time 
+	it takes to put down the tools.

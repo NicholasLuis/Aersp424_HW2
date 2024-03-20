@@ -1,5 +1,4 @@
 int main()	{
-	
 /*
 PSEUDOCODE for all files pertaining to Problem 3
 
@@ -9,7 +8,7 @@ PSEUDOCODE for all files pertaining to Problem 3
 >	Initialize multithreading
 		- Each plane + ATC has its own thread to watch for status changes, requests, etc.
 
->	Traffic pattern object
+>	Traffic data object
 		- Private [traffic pattern] (queue container of Plane pointers) tracks how many/which airplanes are in the pattern already
 		- Private [runway status] (bool) tracks if there is a plane on the runway
 		- bool function that gets the runway status

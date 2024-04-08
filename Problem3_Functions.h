@@ -3,17 +3,38 @@
 // This file declares all of the functions/classes needed for Problem 3
 
 #include <queue>
+#include <iostream>
+#include <thread>
+#include <mutex>
 
 class Aircraft {
-	// Decision making: Pilot diverts to different airport if the airport is full
 private:
+	std::mutex* PrintMutex = new std::mutex;
+	std::mutex* DataMutex = new std::mutex;
 
 public:
+	void initiateContact(ATC* ATC_Pointer);
+	void operate(); // Command that has all of the planes operate independently
+
+	Aircraft(std::mutex* mutex1, std::mutex* mutex2);
+};
+
+class ATC {
+private:
+	std::mutex* PrintMutex = new std::mutex;
+	std::mutex* DataMutex = new std::mutex;
+
+	bool isAsleep;
+	bool isBusy; // keeps track if the 
+public: 
+	std::string getStatus();
+	void operate();
+	ATC(std::mutex* mutex1, std::mutex* mutex2);
+
 };
 
 class TrafficData {
-	// This class tracks if there are planes on the runway & in the traffic pattern
-	// This class does NOT make any decisions. It is purely for data organization
+	// This object is a shared resource that has information about the traffic pattern, runway status, etc.
 private:
 	std::queue<Aircraft*> trafficQueue;
 	bool runwayStatus;

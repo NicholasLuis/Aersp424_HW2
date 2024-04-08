@@ -1,7 +1,19 @@
 // This file initializes all of the function/classes definitions needed for Problem 3
 #include "Problem3_Functions.h"
 
-// "Aircraft" Class
+// Aircraft Class
+	Aircraft::Aircraft(std::mutex* mutex1, std::mutex* mutex2) // Aircraft constructor
+	{
+		this->PrintMutex = mutex1;
+		this->DataMutex = mutex2;
+	}
+
+// ATC Class
+	ATC::ATC(std::mutex* mutex1, std::mutex* mutex2) // ATC constructor
+	{
+		this->PrintMutex = mutex1;
+		this->DataMutex = mutex2;
+	}
 
 // "Traffic Data" Class
 	TrafficData::TrafficData() { // Default Constructor

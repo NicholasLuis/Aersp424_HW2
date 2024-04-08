@@ -1,4 +1,23 @@
-int main()	{
+#include "Problem3_Functions.h"
+#include <mutex>
+
+int main() {
+	// Creates 1 mutex for the output window and 1 mutex for the traffic data (both shared resources)
+	std::mutex* printMutex = new std::mutex; 
+	std::mutex* dataMutex = new std::mutex;
+	
+	// Creates 10 Aircraft and 1 Air Traffic Controller
+	Aircraft Plane1(printMutex, dataMutex), Plane2(printMutex, dataMutex), Plane3(printMutex, dataMutex), 
+			 Plane4(printMutex, dataMutex), Plane5(printMutex, dataMutex), Plane6(printMutex, dataMutex), 
+			 Plane7(printMutex, dataMutex), Plane8(printMutex, dataMutex), Plane9(printMutex, dataMutex),
+			 Plane10(printMutex, dataMutex);
+
+	ATC ATC1(printMutex, dataMutex);
+	return 0;
+}
+
+
+
 /*
 PSEUDOCODE for all files pertaining to Problem 3
 
@@ -38,6 +57,6 @@ PSEUDOCODE for all files pertaining to Problem 3
 
 
 *** Don't forget to delete pointers to avoid memory leaks
+
+	Thread for each plane + atc
 */
-	return 0;
-}

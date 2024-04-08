@@ -2,17 +2,40 @@
 #include "Problem3_Functions.h"
 
 // Aircraft Class
-	Aircraft::Aircraft(std::mutex* mutex1, std::mutex* mutex2) // Aircraft constructor
+	void Aircraft::setMutexes(std::mutex* mutex1, std::mutex* mutex2)
 	{
-		this->PrintMutex = mutex1;
-		this->DataMutex = mutex2;
+		PrintMutex = mutex1;
+		DataMutex = mutex2;
+	}
+	void Aircraft::setDataShare(TrafficData* sharedData) 
+	{
+		trafficData = sharedData;
+	}
+	void setAircraftNumber(int num);
+	void Aircraft::operate() // this will run independently
+	{
+		if (trafficData->trafficQueueNumber() >= 3) // Checks if the traffic pattern is full
+		{
+			PrintMutex->lock();
+			std::cout << "The traffic pattern is full. Aircraft # " << AircraftNumber << " is going to a different airport" << std::endl;
+			PrintMutex->unlock();
+
+		}
 	}
 
 // ATC Class
-	ATC::ATC(std::mutex* mutex1, std::mutex* mutex2) // ATC constructor
+	void ATC::setMutexes(std::mutex* mutex1, std::mutex* mutex2) // ATC constructor
 	{
-		this->PrintMutex = mutex1;
-		this->DataMutex = mutex2;
+		PrintMutex = mutex1;
+		DataMutex = mutex2;
+	}
+	void ATC::setDataShare(TrafficData* sharedData)
+	{
+		trafficData = sharedData;
+	}
+	void operate()
+	{
+
 	}
 
 // "Traffic Data" Class

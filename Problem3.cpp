@@ -1,18 +1,36 @@
 #include "Problem3_Functions.h"
-#include <mutex>
+#include <vector>
+#include <thread>
 
 int main() {
 	// Creates 1 mutex for the output window and 1 mutex for the traffic data (both shared resources)
 	std::mutex* printMutex = new std::mutex; 
 	std::mutex* dataMutex = new std::mutex;
 	
-	// Creates 10 Aircraft and 1 Air Traffic Controller
-	Aircraft Plane1(printMutex, dataMutex), Plane2(printMutex, dataMutex), Plane3(printMutex, dataMutex), 
-			 Plane4(printMutex, dataMutex), Plane5(printMutex, dataMutex), Plane6(printMutex, dataMutex), 
-			 Plane7(printMutex, dataMutex), Plane8(printMutex, dataMutex), Plane9(printMutex, dataMutex),
-			 Plane10(printMutex, dataMutex);
+	// Creates 10 Aircraft, 11 threads, 1 Air Traffic Controller, 1 shared data resource
+	Aircraft Aircrafts[10];
+	std::thread threadList[11];
+	ATC ATC1;
+	TrafficData* trafficData = new TrafficData;
 
-	ATC ATC1(printMutex, dataMutex);
+	// Resource sharing 
+	for (int i = 0; i < 10; i++)
+	{
+		Aircrafts[i].setMutexes(printMutex, dataMutex);
+		Aircrafts[i].setDataShare(trafficData);
+
+	}
+	ATC1.setMutexes(printMutex, dataMutex);
+	ATC1.setDataShare(trafficData);
+
+	// Operate
+	threadList[0] = std::thread(&ATC::operate, ATC1);
+	for (int i = 0; i < 10; i++)
+	{
+		Aircrafts[i].operate();
+		threadList[i+1] = std::thread(&ATC::operate, ATC1);
+	}
+
 	return 0;
 }
 

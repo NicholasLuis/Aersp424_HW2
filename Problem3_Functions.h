@@ -9,28 +9,35 @@
 
 class Aircraft {
 private:
+	int AircraftNumber; 
 	std::mutex* PrintMutex = new std::mutex;
 	std::mutex* DataMutex = new std::mutex;
+	TrafficData* trafficData = new TrafficData;
 
+	std::thread threadAircraft;
 public:
 	void initiateContact(ATC* ATC_Pointer);
 	void operate(); // Command that has all of the planes operate independently
-
-	Aircraft(std::mutex* mutex1, std::mutex* mutex2);
+	void setMutexes(std::mutex* mutex1, std::mutex* mutex2);
+	void setDataShare(TrafficData* sharedData);
+	void setAircraftNumber(int num);
 };
 
 class ATC {
 private:
 	std::mutex* PrintMutex = new std::mutex;
 	std::mutex* DataMutex = new std::mutex;
+	TrafficData* trafficData = new TrafficData;
+
+	std::thread threadATC;
 
 	bool isAsleep;
 	bool isBusy; // keeps track if the 
 public: 
 	std::string getStatus();
 	void operate();
-	ATC(std::mutex* mutex1, std::mutex* mutex2);
-
+	void setMutexes(std::mutex* mutex1, std::mutex* mutex2);
+	void setDataShare(TrafficData* sharedData);
 };
 
 class TrafficData {

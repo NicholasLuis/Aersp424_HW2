@@ -2,34 +2,42 @@
 #include <vector>
 #include <thread>
 
-int main() {
+int main() 
+{
+	// Creates shared resources
+	std::queue<Aircraft*>* trafficQueue= new std::queue<Aircraft*>;
+	bool* runwayStatus = new bool;
+	*runwayStatus = false;
+	bool* initiatingContact = new bool;
+	initiatingContact = false;
+
 	// Creates 1 mutex for the output window and 1 mutex for the traffic data (both shared resources)
 	std::mutex* printMutex = new std::mutex; 
 	std::mutex* dataMutex = new std::mutex;
 	
-	// Creates 10 Aircraft, 11 threads, 1 Air Traffic Controller, 1 shared data resource
-	Aircraft Aircrafts[10];
+	// Creates 10 Aircraft, 11 threads, 1 Air Traffic Controller
+	Aircraft* Aircrafts[10];
 	std::thread threadList[11];
 	ATC ATC1;
-	TrafficData* trafficData = new TrafficData;
 
 	// Resource sharing 
 	for (int i = 0; i < 10; i++)
 	{
-		Aircrafts[i].setMutexes(printMutex, dataMutex);
-		Aircrafts[i].setDataShare(trafficData);
+		Aircrafts[i]->setMutexes(printMutex, dataMutex);
+		Aircrafts[i]->setDataShare(runwayStatus, trafficQueue);
 
 	}
 	ATC1.setMutexes(printMutex, dataMutex);
-	ATC1.setDataShare(trafficData);
+	ATC1.setDataShare(runwayStatus, trafficQueue);
 
 	// Operate
 	threadList[0] = std::thread(&ATC::operate, ATC1);
 	for (int i = 0; i < 10; i++)
 	{
-		Aircrafts[i].operate();
-		threadList[i+1] = std::thread(&ATC::operate, ATC1);
+		Aircrafts[i]->operate();
 	}
+	threadList[10] = std::thread(&ATC::operate, ATC1);
+
 
 	return 0;
 }

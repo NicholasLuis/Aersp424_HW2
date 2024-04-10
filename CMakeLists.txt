@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Q1 Problem1.cpp Problem1_Classes.h Problem1_Classes.cpp)
 add_executable(Q2 Problem2.cpp Problem2_Functions.h Problem2_Functions.cpp)
 add_executable(Q3 Problem3.cpp Problem3_Functions.h Problem3_Functions.cpp)
+add_executable(Q4 Problem4.cpp)
 
 # Question 4
 
@@ -45,10 +46,8 @@ set(SOURCE_FILES
     Problem4.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} OpenGL::GL glfw libglew_static)
+target_link_libraries(Q4 OpenGL::GL glfw libglew_static)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
-
-add_executable(Q4 Problem4.cpp)

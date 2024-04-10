@@ -9,7 +9,7 @@ int main()
 	bool* runwayStatus = new bool;
 	*runwayStatus = false;
 	bool* initiatingContact = new bool;
-	initiatingContact = false;
+	*initiatingContact = false;
 
 	// Creates 1 mutex for the output window and 1 mutex for the traffic data (both shared resources)
 	std::mutex* printMutex = new std::mutex; 

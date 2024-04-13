@@ -10,14 +10,14 @@
 class Aircraft {
 private:
 	int AircraftNumber; 
-	std::mutex* PrintMutex = new std::mutex;
-	std::mutex* DataMutex = new std::mutex;
+	std::mutex* PrintMutex;
+	std::mutex* DataMutex;
 	std::queue<Aircraft*>* trafficQueue = new std::queue<Aircraft*>;
 	bool* runwayStatus = new bool;
 
 	std::thread threadAircraft;
 public:
-	Aircraft(); // Constructor
+	Aircraft(int num); // Constructor
 
 	void initiateContact(bool* contactPtr);
 	void operate(); // Command that has all of the planes operate independently

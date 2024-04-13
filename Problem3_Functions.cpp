@@ -2,9 +2,9 @@
 #include "Problem3_Functions.h"
 
 // Aircraft Class
-	Aircraft::Aircraft() // Constructor
+	Aircraft::Aircraft(int num) // Constructor
 	{
-
+		AircraftNumber = num;
 	}
 	void Aircraft::setMutexes(std::mutex* mutex1, std::mutex* mutex2)
 	{
@@ -22,7 +22,7 @@
 	}
 	void Aircraft::operate() // this will run independently
 	{
-		while (true) { // Thread operates the Aircraft forever
+		while (trafficQueue->size() > 0) { // Thread operates the Aircraft forever
 
 			if (trafficQueue->size() >= 3) // Checks if the traffic pattern is full
 			{
